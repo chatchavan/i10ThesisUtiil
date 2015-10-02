@@ -1,6 +1,21 @@
 import sublime, sublime_plugin
 import re
 
+# paste margin note at the beginning of the paragraph
+class AddMarginNoteFromClipboardCommand(sublime_plugin.TextCommand):
+	def run(self, edit):
+		# get the beginning of the paragraph
+		cursorPoint = self.view.sel()[0].begin()
+		paragraphBegin = self.view.find_by_class(cursorPoint, False, sublime.CLASS_EMPTY_LINE)
+
+		# create margin note text
+		textClipboard = sublime.get_clipboard()
+		marginNote = "\n\\mnote{%s}%%" % ThesisUtil.pagesToTex(textClipboard)
+
+		# insert text
+		self.view.insert(edit, paragraphBegin, marginNote)
+
+
 # create a figure placeholder with the current label at the end of the current paragraph
 class AddFigureFromLabelCommand(sublime_plugin.TextCommand):
 	def run(self, edit):

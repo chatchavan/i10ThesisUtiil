@@ -1,5 +1,6 @@
 [
 	{ "keys": ["super+option+v"], "command": "paste_from_pages" },
 	{ "keys": ["super+option+i"], "command": "index_from_selection" },
+	{ "keys": ["super+option+m"], "command": "add_margin_note_from_clipboard" },
 	{ "keys": ["super+shift+f"], "command": "add_figure_from_label" },
 ]
