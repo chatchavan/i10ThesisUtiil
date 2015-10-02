@@ -54,8 +54,7 @@ class IndexFromSelectionCommand(sublime_plugin.TextCommand):
 		termTextWrapped = "\n\index{%s}%%" % termText
 
 		# find the beginning of the paragraph
-		paragraphRegion = self.view.find_by_class(termRegion.begin(), False, sublime.CLASS_EMPTY_LINE)
-		posInsert = paragraphRegion
+		posInsert = self.view.find_by_class(termRegion.begin(), False, sublime.CLASS_EMPTY_LINE)
 
 		# insert the index
 		self.view.insert(edit, posInsert, termTextWrapped)
