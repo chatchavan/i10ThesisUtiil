@@ -57,14 +57,7 @@ class PasteFromPagesCommand(sublime_plugin.TextCommand):
 		textClipboard = sublime.get_clipboard()
 
 		# replace common characters
-		textQuoted = textClipboard.replace("“", "``") \
-						.replace("”", "''") \
-						.replace("’", "'") \
-						.replace("%", "\\%") \
-						.replace("<", "\\textless") \
-						.replace(">", "\\textgreater") \
-						.replace("–", "--") \
-						.replace("—", "---") \
+		textQuoted = ThesisUtil.pagesToTex(textClipboard)
 
 		# split line at the end of the sentence
 		splitLines = [chunk.strip() for chunk in textQuoted.split(". ")]
@@ -79,4 +72,17 @@ class PasteFromPagesCommand(sublime_plugin.TextCommand):
 		# insert the text
 		finalText = textFigured
 		self.view.insert(edit, self.view.sel()[0].begin(), finalText)
-		
+
+class ThesisUtil:
+	@staticmethod
+	def pagesToTex(pagesText):
+		retVal = pagesText.replace("“", "``") \
+							.replace("”", "''") \
+							.replace("’", "'") \
+							.replace("%", "\\%") \
+							.replace("<", "\\textless") \
+							.replace(">", "\\textgreater") \
+							.replace("–", "--") \
+							.replace("—", "---") \
+
+		return retVal
