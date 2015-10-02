@@ -1,4 +1,5 @@
 [
 	{ "keys": ["super+option+v"], "command": "paste_from_pages" },
-	{ "keys": ["super+option+i"], "command": "index_from_selection" }
+	{ "keys": ["super+option+i"], "command": "index_from_selection" },
+	{ "keys": ["super+shift+f"], "command": "add_figure_from_label" },
 ]

@@ -1,6 +1,32 @@
 import sublime, sublime_plugin
 import re
 
+# create a figure placeholder with the current label at the end of the current paragraph
+class AddFigureFromLabelCommand(sublime_plugin.TextCommand):
+	def run(self, edit):
+		# get the figure label
+		cursorPoint = self.view.sel()[0].begin()
+		labelRegion = self.view.expand_by_class(cursorPoint, sublime.CLASS_WORD_START | sublime.CLASS_WORD_END)
+		labelText = self.view.substr(labelRegion)
+
+		# crate a command for figure insertion
+		figureCommand = "%%\n\
+\myFigureN[%s]{placeholder}%%\n\
+{longcaption}%%\n\
+{shortcaption}" % labelText
+
+		# find the end of the paragraph
+		insertPoint = self.view.find_by_class(cursorPoint, True, sublime.CLASS_EMPTY_LINE)
+
+		# insert the figure command
+		self.view.insert(edit, insertPoint, figureCommand)
+
+		# got to the figure caption
+		captionRegion = self.view.find("longcaption", insertPoint, sublime.LITERAL)
+		self.view.sel().clear()
+		self.view.sel().add(captionRegion)
+
+
 
 # create index term from the selected text at the beginning of the current paragraph
 class IndexFromSelectionCommand(sublime_plugin.TextCommand):
